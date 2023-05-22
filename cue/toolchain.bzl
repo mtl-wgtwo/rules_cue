@@ -1,13 +1,11 @@
 """This module implements the language-specific toolchain rule.
 """
 
-MylangInfo = provider(
+CueInfo = provider(
     doc = "Information about how to invoke the tool executable.",
     fields = {
         "target_tool_path": "Path to the tool executable for the target platform.",
-        "tool_files": """Files required in runfiles to make the tool executable available.
-
-May be empty if the target_tool_path points to a locally installed tool binary.""",
+        "tool_files": "Files required in runfiles to make the tool executable available.  May be empty if the target_tool_path points to a locally installed tool binary.",
     },
 )
 
@@ -18,7 +16,7 @@ def _to_manifest_path(ctx, file):
     else:
         return ctx.workspace_name + "/" + file.short_path
 
-def _mylang_toolchain_impl(ctx):
+def _cue_toolchain_impl(ctx):
     if ctx.attr.target_tool and ctx.attr.target_tool_path:
         fail("Can only set one of target_tool or target_tool_path but both were set.")
     if not ctx.attr.target_tool and not ctx.attr.target_tool_path:
@@ -34,13 +32,13 @@ def _mylang_toolchain_impl(ctx):
     # Make the $(tool_BIN) variable available in places like genrules.
     # See https://docs.bazel.build/versions/main/be/make-variables.html#custom_variables
     template_variables = platform_common.TemplateVariableInfo({
-        "MYLANG_BIN": target_tool_path,
+        "cue_BIN": target_tool_path,
     })
     default = DefaultInfo(
         files = depset(tool_files),
         runfiles = ctx.runfiles(files = tool_files),
     )
-    mylanginfo = MylangInfo(
+    cueinfo = CueInfo(
         target_tool_path = target_tool_path,
         tool_files = tool_files,
     )
@@ -48,7 +46,7 @@ def _mylang_toolchain_impl(ctx):
     # Export all the providers inside our ToolchainInfo
     # so the resolved_toolchain rule can grab and re-export them.
     toolchain_info = platform_common.ToolchainInfo(
-        mylanginfo = mylanginfo,
+        cueinfo = cueinfo,
         template_variables = template_variables,
         default = default,
     )
@@ -58,8 +56,8 @@ def _mylang_toolchain_impl(ctx):
         template_variables,
     ]
 
-mylang_toolchain = rule(
-    implementation = _mylang_toolchain_impl,
+cue_toolchain = rule(
+    implementation = _cue_toolchain_impl,
     attrs = {
         "target_tool": attr.label(
             doc = "A hermetically downloaded executable target for the target platform.",
@@ -71,8 +69,5 @@ mylang_toolchain = rule(
             mandatory = False,
         ),
     },
-    doc = """Defines a mylang compiler/runtime toolchain.
-
-For usage see https://docs.bazel.build/versions/main/toolchains.html#defining-toolchains.
-""",
+    doc = "Defines a cue compiler/runtime toolchain.  For usage see https://docs.bazel.build/versions/main/toolchains.html#defining-toolchains.",
 )

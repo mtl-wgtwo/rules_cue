@@ -2,15 +2,21 @@
 
 Public API re-exports
 
-<a id="example"></a>
+<a id="cue_vet"></a>
 
-## example
+## cue_vet
 
 <pre>
-example()
+cue_vet(<a href="#cue_vet-kwargs">kwargs</a>)
 </pre>
 
-This is an example
 
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="cue_vet-kwargs"></a>kwargs |  <p align="center"> - </p>   |  none |
 
 
