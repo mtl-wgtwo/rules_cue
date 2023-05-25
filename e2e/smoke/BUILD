@@ -3,15 +3,13 @@ Add a basic smoke-test target below.
 """
 
 load("@bazel_skylib//rules:build_test.bzl", "build_test")
-# load("com_wgtwo_rules_cue//cue:defs.bzl", "...")
 
-# Replace with a usage of your rule/macro
-filegroup(name = "empty")
-
+# Assert that the rules build
 build_test(
     name = "smoke_test",
     targets = [
-        # targets you add above
-        ":empty",
+        "//testdata/vet:valid",
+        "//testdata/vet:invalid",
+        "//testdata/vet:combined_invalid",
     ],
 )

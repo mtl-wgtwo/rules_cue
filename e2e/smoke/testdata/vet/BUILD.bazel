@@ -1,0 +1,26 @@
+load("@com_wgtwo_rules_cue//cue:defs.bzl", "cue_vet_test")
+
+cue_vet_test(
+    name = "valid",
+    srcs = ["valid.yaml"],
+    schema = "check.cue",
+    visibility = ["//visibility:public"],
+)
+
+# These are tagged as manual because they are expected to fail
+# TODO(mtl) use the failure testing framework: https://bazel.build/rules/testing#failure-testing
+cue_vet_test(
+    name = "invalid",
+    srcs = ["invalid.yaml"],
+    schema = "check.cue",
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+)
+
+cue_vet_test(
+    name = "combined_invalid",
+    srcs = glob(["*.yaml"]),
+    schema = "check.cue",
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+)

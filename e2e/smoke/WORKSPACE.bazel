@@ -14,6 +14,12 @@ local_repository(
 # you should fetch it *before* calling this.
 # Alternatively, you can skip calling this function, so long as you've
 # already fetched all the dependencies.
-load("@com_wgtwo_rules_cue//cue:repositories.bzl", "rules_cue_dependencies")
+load("@com_wgtwo_rules_cue//cue:repositories.bzl", "cue_register_toolchains", "rules_cue_dependencies")
 
 rules_cue_dependencies()
+
+cue_register_toolchains(
+    name = "cue_0_50",
+    cue_version = "0.5.0",
+    register = True,
+)
