@@ -2,12 +2,12 @@
 
 Public API re-exports
 
-<a id="cue_vet"></a>
+<a id="cue_vet_test"></a>
 
-## cue_vet
+## cue_vet_test
 
 <pre>
-cue_vet(<a href="#cue_vet-kwargs">kwargs</a>)
+cue_vet_test(<a href="#cue_vet_test-kwargs">kwargs</a>)
 </pre>
 
 
@@ -17,6 +17,6 @@ cue_vet(<a href="#cue_vet-kwargs">kwargs</a>)
 
 | Name  | Description | Default Value |
 | :------------- | :------------- | :------------- |
-| <a id="cue_vet-kwargs"></a>kwargs |  <p align="center"> - </p>   |  none |
+| <a id="cue_vet_test-kwargs"></a>kwargs |  <p align="center"> - </p>   |  none |
 
 
