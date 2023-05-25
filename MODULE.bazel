@@ -11,7 +11,7 @@ bazel_dep(name = "gazelle", version = "0.29.0", repo_name = "bazel_gazelle", dev
 bazel_dep(name = "bazel_skylib_gazelle_plugin", version = "1.4.1", dev_dependency = True)
 
 cue = use_extension("//cue:extensions.bzl", "cue")
-cue.toolchain(cue_version = "1.14.2")
+cue.toolchain(cue_version = "0.5.0")
 use_repo(cue, "cue_toolchains")
 
 register_toolchains("@cue_toolchains//:all")
