@@ -17,8 +17,10 @@ def _cue_vet_test_impl(ctx):
     files = []
     files.extend(ctx.files.srcs)
     files.extend(ctx.files.schema)
+    executable = ctx.outputs.executable
 
     script = "\n".join(
+        ["#!/bin/bash"] +
         ["err=0"] +
         [_run_cue_vet(toolchain.cueinfo.target_tool_path, f, ctx.files.schema[0].path) for f in ctx.files.srcs] +
         ["exit $err"],
@@ -26,7 +28,7 @@ def _cue_vet_test_impl(ctx):
 
     # Write the file, it is executed by 'bazel test'.
     ctx.actions.write(
-        output = ctx.outputs.executable,
+        output = executable,
         content = script,
         is_executable = True,
     )
@@ -37,7 +39,10 @@ def _cue_vet_test_impl(ctx):
         files = ctx.files.srcs + ctx.files.schema,
         transitive_files = toolchain.default.files,
     )
-    return [DefaultInfo(runfiles = runfiles)]
+    return [DefaultInfo(
+        executable = executable,
+        runfiles = runfiles,
+    )]
 
 _cue_vet_test = rule(
     attrs = {
